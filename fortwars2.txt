@@ -1,0 +1,9 @@
+'fortwars2'
+{
+	"base"		"sandbox"
+    "title"  'Fortwars 2.0'
+
+    "icon"  ""
+    "info"  ""
+    "hide"  "0"
+}

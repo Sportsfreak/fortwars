@@ -1,0 +1,1 @@
+fortwars = fortwars or GAMEMODE
