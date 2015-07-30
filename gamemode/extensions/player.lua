@@ -25,7 +25,18 @@ if (SERVER) then
 	end
 
 	function ply:setClass(id)
+		if (self.class) then
+			local hk_rem = fortwars.classes[ self.class ].ability[ 1 ]
+
+			hook.Remove(hk_rem, hk_rem..'_'..self:UniqueID())
+		end
+
 		self.class = id
+
+		local class = fortwars.classes[ id ]
+		local hk = class.ability[ 1 ]
+
+		hook.Add(hk, hk..self:UniqueID(), class.ability[ 2 ])
 
 		self:sync('Class', id)
 	end

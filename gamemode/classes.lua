@@ -9,9 +9,9 @@ fortwars:registerClass("Default", {
 	model  = 'path/to/model.mdl',
 	desc   = '',
 	loadout = {} //leave blank for default gm loadout
-	ability = function(ply) //this is called in a think hook. basically, check before you do, here.
+	ability = {'hookName', function(args_for_hook)
 		return
-	end,
+	end},
 	canbuy = function(ply)
 		return false //return whether or not this can be bought
 	end,

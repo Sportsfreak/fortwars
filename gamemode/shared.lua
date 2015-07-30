@@ -34,10 +34,3 @@ function fortwars:registerClass(index, tbl)
 		desc = tbl.desc or 'No description'
 	}
 end
-
-function GM:Think()
-	for k,v in pairs(player.GetAll()) do
-		local class = v:getClass()
-		class.ability(ply)
-	end
-end
