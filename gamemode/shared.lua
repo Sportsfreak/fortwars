@@ -30,6 +30,7 @@ function fortwars:registerClass(index, tbl)
 		loadout = tbl.loadout or {},
 		ability = tbl.ability or function() end,
 		canbuy = tbl.canbuy or function() return true end,
-		price = tbl.price
+		price = tbl.price,
+		desc = tbl.desc or 'No description'
 	}
 end

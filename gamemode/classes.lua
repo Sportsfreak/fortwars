@@ -7,6 +7,7 @@ fortwars:registerClass("Default", {
 	regen  = 1, //variable per second
 	jump   = nil,
 	model  = 'path/to/model.mdl',
+	desc   = '',
 	loadout = {} //leave blank for default gm loadout
 	ability = function(ply) //this is called in a think hook. basically, check before you do, here.
 		return
