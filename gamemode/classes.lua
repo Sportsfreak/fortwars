@@ -16,6 +16,6 @@ fortwars:registerClass("Default", {
 		return false //return whether or not this can be bought
 	end,
 	price = function(ply)
-		return nil //return nothing for free
+		return nil //return nothing for free 
 	end
 })
