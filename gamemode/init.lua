@@ -21,3 +21,11 @@ AddCSLuaFile "config.lua"
 util.AddNetworkString('fw.update_round_status') //note: sends both time and status
 util.AddNetworkString("fw.broadcast_stats")
 util.AddNetworkString('fw.update_ball_time') //sends the time every second they have the ball
+
+function GM:PlayerInitialSpawn(ply)
+	ply:loadaccount()
+end
+
+function GM:PlayerDisconnected(ply)
+	ply:saveaccount()
+end

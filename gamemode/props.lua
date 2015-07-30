@@ -15,6 +15,10 @@ if (SERVER) then
 
 		if (ROUND_STATUS != ROUND_BUILDING) then return false end
 
+		if (!ply:canAfford(self.config.prop_cost(ply))) then
+			return false
+		end
+
 		local mprops = self.config.max_props(ply) or 25
 
 		if (ply:getPropCount() >= mprops) then return false end
@@ -23,6 +27,7 @@ if (SERVER) then
 	end
 
 	function fortwars:PlayerSpawnedProp(ply, mdl, ent)
+		ply:takePoints(self.config.prop_cost(ply))
 		ent:setOwner(ply)
 	end
 

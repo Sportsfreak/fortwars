@@ -120,6 +120,7 @@ timer.Create('FW.RoundHandler', 1, 0, function()
 	if (holding_team != 0) then
 		score[ holding_team ] = score[ holding_team ] - 1
 		net.Start("fw.update_ball_time")
+		net.WriteInt(holding_team)
 		net.Broadcast()
 	end
 

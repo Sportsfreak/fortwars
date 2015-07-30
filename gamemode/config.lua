@@ -5,6 +5,11 @@ fortwars.config.build_length = 4
 fortwars.config.prep_length  = .1
 fortwars.config.end_length   = .5
 fortwars.config.min_players  = 2
+fortwars.config.default_points = 150000
+fortwars.config.default_class = 'Default'
+fortwars.config.prop_cost = function(ply)
+	return 150
+end
 fortwars.config.max_props = function(ply)
 	return 25 //return a modified value based on usergroup etc
 end
