@@ -19,15 +19,17 @@ local con = fortwars.config
 
 function fortwars:registerClass(index, tbl)
 	fortwars.classes[ index ] = {
-		health = tbl.health or con.def_health
-		armor  = tbl.armor  or con.def_armor
-		dmg    = tbl.damage or con.def_damage
-		speed  = tbl.speed  or con.def_speed
-		energy = tbl.energy or con.def_energy
-		regen  = tbl.energy_regen or con.def_enery_regen
-		jump   = tbl.jump   or con.def_jump
-		model  = tbl.model
-		loadout = tbl.loadout or {}
-		ability = tbl.ability or function() end
+		health = tbl.health or con.def_health,
+		armor  = tbl.armor  or con.def_armor,
+		dmg    = tbl.damage or con.def_damage,
+		speed  = tbl.speed  or con.def_speed,
+		energy = tbl.energy or con.def_energy,
+		regen  = tbl.energy_regen or con.def_enery_regen,
+		jump   = tbl.jump   or con.def_jump,
+		model  = tbl.model,
+		loadout = tbl.loadout or {},
+		ability = tbl.ability or function() end,
+		canbuy = tbl.canbuy or function() return true end,
+		price = tbl.price
 	}
 end
