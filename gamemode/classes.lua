@@ -10,5 +10,11 @@ fortwars:registerClass("Default", {
 	loadout = {} //leave blank for default gm loadout
 	ability = function(ply) //this is called in a think hook. basically, check before you do, here.
 		return
+	end,
+	canbuy = function(ply)
+		return false //return whether or not this can be bought
+	end,
+	price = function(ply)
+		return nil //return nothing for free
 	end
 })
