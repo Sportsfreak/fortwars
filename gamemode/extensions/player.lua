@@ -1,5 +1,22 @@
 local ply = FindMetaTable("Player")
 
+function ply:getClass()
+	return (SERVER and fortwars.classes[ self.class ]) or fortwars.classes[ self:GetNetVar("Class") ]
+end
+
+function ply:getPoints()
+	return (SERVER and self.points) or self:GetNetVar("Score")
+end
+
+function ply:canAfford(test)
+	local points = self:getPoints()
+	return (points - test >= 0)
+end
+
+function ply:getMod(smod)
+
+end
+
 if (SERVER) then
 	function ply:savePoints()
 		local sql = "UPDATE playerdata SET money = '"..self.points.."' WHERE id = '"..self:SteamID().."'"
@@ -7,12 +24,10 @@ if (SERVER) then
 		query(sql)
 	end
 
-	function ply:getClass()
-
-	end
-
 	function ply:setClass(id)
+		self.class = id
 
+		self:sync('Class', id)
 	end
 
 	function ply:saveaccount()
@@ -71,10 +86,6 @@ if (SERVER) then
 		self:savePoints()
 	end
 
-	function ply:canAfford(test)
-		return (self.points - test >= 0)
-	end
-
 	function ply:gameLoadout()
 		self:StripWeapons()
 
@@ -84,9 +95,20 @@ if (SERVER) then
 			self:Give(v)
 		end
 
-		for k,v in pairs(ply:getClass().Loadout or {}) do
+		for k,v in pairs(self:getClass().loadout or {}) do
 			self:Give(v)
 		end
+
+		local class = self:getClass()
+
+		self:SetJumpPower(class.jump * self:getMod("Jump"))
+		self:SetHealth(class.health)
+		self:SetArmor(class.armor)
+		self:SetWalkSpeed(fortwars.config.walkspeed + class.speed)
+		self:SetRunSpeed(fortwars.config.runsped + class.speed)
+		self:setEnergy(class.energy)
+		self:setEnergyRegen(class.regen)
+		self:SetModel(Model(class.model))
 	end
 	
 	function ply:buildLoadout()
