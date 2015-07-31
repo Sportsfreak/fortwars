@@ -5,7 +5,7 @@ function ply:getClass()
 end
 
 function ply:getPoints()
-	return (SERVER and self.points) or self:GetNetVar("Score")
+	return (SERVER and self.points) or self:GetNetVar("Score") or fortwars.config.default_points
 end
 
 function ply:canAfford(test)
@@ -14,7 +14,7 @@ function ply:canAfford(test)
 end
 
 function ply:getMod(smod)
-
+	return (SERVER and self.modifiers[ smod ]) or self:GetNetVar(smod) or 0
 end
 
 if (SERVER) then
@@ -22,6 +22,12 @@ if (SERVER) then
 		local sql = "UPDATE playerdata SET money = '"..self.points.."' WHERE id = '"..self:SteamID().."'"
 
 		query(sql)
+	end
+
+	function ply:buyMod(type)
+		self.modifiers[ type ] = (self.modifiers[ type ] or 0) + 1
+
+		self:sync(type, self.modifiers[ type ])
 	end
 
 	function ply:setClass(id)
@@ -113,12 +119,11 @@ if (SERVER) then
 		local class = self:getClass()
 
 		self:SetJumpPower(class.jump * self:getMod("Jump"))
-		self:SetHealth(class.health)
-		self:SetArmor(class.armor)
-		self:SetWalkSpeed(fortwars.config.walkspeed + class.speed)
-		self:SetRunSpeed(fortwars.config.runsped + class.speed)
-		self:setEnergy(class.energy)
-		self:setEnergyRegen(class.regen)
+		self:SetHealth(class.health * self:getMod("Health"))
+		self:SetArmor(class.armor * self:getMod("Armor"))
+		self:SetWalkSpeed((fortwars.config.walkspeed + class.speed) * self:getMod("Speed"))
+		self:SetRunSpeed((fortwars.config.runsped + class.speed) * self:getMod("Speed"))
+		self.energy = (class.energy * self:getMod("Energy"))
 		self:SetModel(Model(class.model))
 	end
 	
@@ -141,4 +146,16 @@ if (SERVER) then
 		end,
 		LocalVar = true,
 	})
+
+	for k,v in pairs(fortwars.modifiers) do
+		nw.Register(k, {
+			Read = function()
+				return net.ReadUInt(8)
+			end,
+			Write = function(v)
+				return net.WriteUInt(v, 8)
+			end,
+			LocalVar = true,
+		})
+	end
 end

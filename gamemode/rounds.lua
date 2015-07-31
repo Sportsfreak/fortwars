@@ -124,5 +124,10 @@ timer.Create('FW.RoundHandler', 1, 0, function()
 		net.Broadcast()
 	end
 
+	for k,v in pairs(player.GetAll()) do
+		local v = v:getClass().energy
+		v.energy = v.energy - 
+	end
+
 	timeleft = timeleft - 1
 end)
